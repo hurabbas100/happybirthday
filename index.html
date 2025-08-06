@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f9e2f0, #e1d4f8, #f8e4b7);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            color: #4b2e39;
+            position: relative;
+        }
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+        #intro-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .heart-reveal {
+            position: absolute;
+            font-size: 4rem;
+            animation: heartReveal 1s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes heartReveal {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(2); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        .fire-particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #ff4500;
+            border-radius: 50%;
+            animation: fire 3s ease-out infinite;
+            z-index: 0;
+            box-shadow: 0 0 10px #ff4500, 0 0 20px #ffa500;
+        }
+        @keyframes fire {
+            0% { transform: translateY(100vh) scale(1); opacity: 0.8; }
+            50% { transform: translateY(50vh) translateX(calc(sin(2 * 3.14 * var(--random)) * 20px)); opacity: 0.5; }
+            100% { transform: translateY(0) scale(0.5); opacity: 0; }
+        }
+        .heart-balloon {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .typewriter {
+            overflow: hidden;
+            white-space: normal;
+            animation: typing 4s steps(60, end) forwards;
+            width: 100%;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .carousel {
+            display: flex;
+            width: 100%;
+            max-width: 900px;
+            height: 550px;
+            gap: 1.5rem;
+            padding: 1rem;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+        }
+        .carousel img {
+            flex: 0 0 auto;
+            width: 250px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            opacity: 0.7;
+            z-index: 1;
+            position: absolute;
+        }
+        .carousel img.center {
+            width: 350px;
+            height: 450px;
+            opacity: 1;
+            z-index: 2;
+            transform: translateX(0);
+        }
+        .carousel img.left {
+            width: 250px;
+            height: 350px;
+            opacity: 0.7;
+            transform: translateX(-300px);
+        }
+        .carousel img.right {
+            width: 250px;
+            height: 350px;
+            opacity: 0.7;
+            transform: translateX(300px);
+        }
+        .carousel img.hidden {
+            opacity: 0;
+            transform: translateX(0);
+            visibility: hidden;
+        }
+        .heart-rise {
+            position: fixed;
+            bottom: 0;
+            font-size: 2rem;
+            animation: rise 8s ease-in-out infinite;
+            z-index: 10;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            50% { transform: translateY(-50vh) translateX(calc(sin(2 * 3.14 * var(--random)) * 50px)); opacity: 0.7; }
+            100% { transform: translateY(-100vh) translateX(0); opacity: 1; }
+        }
+        .music-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 20;
+        }
+        @media (max-width: 768px) {
+            .heart-balloon { font-size: 2rem; left: 5%; }
+            .carousel img { width: 150px; height: 200px; }
+            .carousel img.center { width: 200px; height: 250px; }
+            .carousel img.left { transform: translateX(-180px); }
+            .carousel img.right { transform: translateX(180px); }
+            .carousel { height: 300px; max-width: 600px; }
+            .text-4xl { font-size: 1.25rem; line-height: 1.5; }
+            .text-2xl { font-size: 1rem; line-height: 1.5; }
+            .typewriter { white-space: normal; }
+            .fire-particle { width: 4px; height: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="intro-screen">
+        <button class="bg-pink-500 text-white py-3 px-6 rounded-full hover:bg-pink-600 text-xl" onclick="openGift()">
+            Open Your Gift
+        </button>
+        <div class="heart-reveal">💖</div>
+    </div>
+    <audio id="bg-music" loop src="https://www.bensound.com/bensound-music/bensound-sweet.mp3"></audio>
+    <button class="music-toggle bg-pink-300 text-white p-2 rounded-full" onclick="toggleMusic()">
+        <span id="music-icon">🔊</span>
+    </button>
+    <div class="heart-balloon animate__animated animate__pulse animate__infinite">💖</div>
+    <div class="text-center mt-10 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold typewriter mx-auto max-w-3xl">
+            Happy Birthday to the one who brings light to every room, laughter to every moment, and love to every heart. May your day be as beautiful as your soul.
+        </h1>
+    </div>
+    <div class="carousel my-8">
+        <img src="images/FYP.png" alt="Memory 1">
+        <img src="images/5-year-uni.png" alt="Memory 2">
+        <img src="images/12-rabialawal.png" alt="Memory 3">
+        <img src="images/PTI-WALi.png" alt="Memory 4">
+        <img src="images/shoot.png" alt="Memory 5">
+        <img src="images/university-old.png" alt="Memory 6">
+        <img src="images/uon-51.png" alt="Memory 7">
+        <img src="images/uon-bio.png" alt="Memory 8">
+        <img src="images/uon-glasss.png" alt="Memory 9">
+        <img src="images/uon-yellow.png" alt="Memory 10">
+        <img src="images/village-2.png" alt="Memory 11">
+        <img src="images/vllage.png" alt="Memory 12">
+    </div>
+    <div class="text-center mb-10 px-4">
+        <p class="text-2xl md:text-3xl font-semibold">
+            With all my heart, I celebrate you today. Happy Birthday, HUR ABBAS RANA! 🎉💖
+        </p>
+        <button class="mt-4 bg-pink-500 text-white py-2 px-6 rounded-full hover:bg-pink-600" onclick="sendLove()">
+            Send Love
+        </button>
+    </div>
+    <script>
+        // Fire particle animation
+        function createFire() {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'fire-particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.background = ['#ff4500', '#ffa500', '#ff6347'][Math.floor(Math.random() * 3)];
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.setProperty('--random', Math.random());
+                document.body.appendChild(particle);
+            }
+        }
+
+        // Intro screen handling
+        function openGift() {
+            const introScreen = document.getElementById('intro-screen');
+            const heart = introScreen.querySelector('.heart-reveal');
+            heart.style.animation = 'heartReveal 1s ease-out forwards';
+            setTimeout(() => {
+                introScreen.classList.add('hidden');
+                createFire();
+                startCarousel();
+            }, 1000);
+        }
+
+        // Music toggle
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIcon.textContent = '🔊';
+            } else {
+                audio.pause();
+                musicIcon.textContent = '🔇';
+            }
+        }
+
+        // Send Love hearts animation
+        let isHeartFloating = false;
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-rise';
+            heart.textContent = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.setProperty('--random', Math.random());
+            document.body.appendChild(heart);
+        }
+        function sendLove() {
+            if (!isHeartFloating) {
+                isHeartFloating = true;
+                function spawnHearts() {
+                    for (let i = 0; i < 3; i++) {
+                        createHeart();
+                    }
+                    if (isHeartFloating) {
+                        setTimeout(spawnHearts, 2000);
+                    }
+                }
+                spawnHearts();
+            }
+        }
+
+        // Carousel auto-scroll
+        function startCarousel() {
+            const carousel = document.querySelector('.carousel');
+            const images = Array.from(carousel.querySelectorAll('img'));
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                images.forEach((img, index) => {
+                    img.classList.remove('center', 'left', 'right', 'hidden');
+                    const distance = (index - currentIndex + images.length) % images.length;
+
+                    if (distance === 0) {
+                        img.classList.add('center');
+                    } else if (distance === 1) {
+                        img.classList.add('right');
+                    } else if (distance === images.length - 1) {
+                        img.classList.add('left');
+                    } else {
+                        img.classList.add('hidden');
+                    }
+                });
+                currentIndex = (currentIndex + 1) % images.length;
+                setTimeout(updateCarousel, 3000); // Change every 3 seconds
+            }
+            updateCarousel();
+        }
+    </script>
+</body>
+</html>
