@@ -89,8 +89,8 @@
             display: flex;
             width: 100%;
             max-width: 900px;
-            height: 550px;
-            gap: 1.5rem;
+            height: 500px;
+            gap: 2rem;
             padding: 1rem;
             position: relative;
             justify-content: center;
@@ -99,8 +99,8 @@
         }
         .carousel img {
             flex: 0 0 auto;
-            width: 250px;
-            height: 350px;
+            width: 200px;
+            height: 300px;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -108,25 +108,26 @@
             opacity: 0.7;
             z-index: 1;
             position: absolute;
+            visibility: visible;
         }
         .carousel img.center {
-            width: 350px;
-            height: 450px;
+            width: 300px;
+            height: 400px;
             opacity: 1;
             z-index: 2;
             transform: translateX(0);
         }
         .carousel img.left {
-            width: 250px;
-            height: 350px;
+            width: 200px;
+            height: 300px;
             opacity: 0.7;
-            transform: translateX(-300px);
+            transform: translateX(-260px);
         }
         .carousel img.right {
-            width: 250px;
-            height: 350px;
+            width: 200px;
+            height: 300px;
             opacity: 0.7;
-            transform: translateX(300px);
+            transform: translateX(260px);
         }
         .carousel img.hidden {
             opacity: 0;
@@ -153,15 +154,46 @@
         }
         @media (max-width: 768px) {
             .heart-balloon { font-size: 2rem; left: 5%; }
-            .carousel img { width: 150px; height: 200px; }
-            .carousel img.center { width: 200px; height: 250px; }
-            .carousel img.left { transform: translateX(-180px); }
-            .carousel img.right { transform: translateX(180px); }
-            .carousel { height: 300px; max-width: 600px; }
+            .carousel {
+                max-width: 100%;
+                height: 300px;
+                padding: 0.5rem;
+            }
+            .carousel img {
+                width: 120px;
+                height: 180px;
+            }
+            .carousel img.center {
+                width: 180px;
+                height: 240px;
+            }
+            .carousel img.left {
+                transform: translateX(-150px);
+            }
+            .carousel img.right {
+                transform: translateX(150px);
+            }
             .text-4xl { font-size: 1.25rem; line-height: 1.5; }
             .text-2xl { font-size: 1rem; line-height: 1.5; }
             .typewriter { white-space: normal; }
             .fire-particle { width: 4px; height: 4px; }
+        }
+        @media (max-width: 480px) {
+            .carousel img {
+                width: 100px;
+                height: 150px;
+            }
+            .carousel img.center {
+                width: 150px;
+                height: 200px;
+            }
+            .carousel img.left {
+                transform: translateX(-120px);
+            }
+            .carousel img.right {
+                transform: translateX(120px);
+            }
+            .carousel { height: 250px; }
         }
     </style>
 </head>
